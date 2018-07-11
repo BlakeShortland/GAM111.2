@@ -3,7 +3,7 @@
 //		Created a target transform variable.
 //		Created the MoveToTarget function.
 //		Added the UnityEngine.AI namespace.
-//
+//		Added the OnCollisionEnter function.
 //
 //
 
