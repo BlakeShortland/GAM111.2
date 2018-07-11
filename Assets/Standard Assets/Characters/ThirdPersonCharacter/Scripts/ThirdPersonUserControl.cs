@@ -1,6 +1,16 @@
+// Changes I've made to this premade script:
+//		Changes instances of "forward" to "up" to accomidate my camera orientation.
+//		Created a target transform variable.
+//		Created the MoveToTarget function.
+//		Added the UnityEngine.AI namespace.
+//
+//
+//
+
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.AI;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
@@ -9,11 +19,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     {
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
-        private Vector3 m_CamForward;             // The current forward direction of the camera
+        private Vector3 m_CamUp;				  // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
-        
+		GameObject target; // Stores the target postion for the player to move to.
+
         private void Start()
         {
             // get the transform of the main camera
@@ -39,7 +50,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-        }
+
+			MoveToTarget(); // Runs my MoveToTarget function.
+		}
 
 
         // Fixed update is called in sync with physics
@@ -54,13 +67,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (m_Cam != null)
             {
                 // calculate camera relative direction to move:
-                m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-                m_Move = v*m_CamForward + h*m_Cam.right;
+                m_CamUp = Vector3.Scale(m_Cam.up, new Vector3(1, 0, 1)).normalized;
+                m_Move = v*m_CamUp + h*m_Cam.right;
             }
             else
             {
                 // we use world-relative directions in the case of no main camera
-                m_Move = v*Vector3.forward + h*Vector3.right;
+                m_Move = v*Vector3.up + h*Vector3.right;
             }
 #if !MOBILE_INPUT
 			// walk speed multiplier
@@ -71,5 +84,24 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;
         }
-    }
+
+		void MoveToTarget()
+		{
+			if (GameObject.Find("PlayerTarget(Clone)") != null)
+			{
+				target = GameObject.Find("PlayerTarget(Clone)");
+				NavMeshAgent agent = GetComponent<NavMeshAgent>();
+				agent.destination = target.transform.position;
+			}
+		}
+
+		void OnCollisionEnter (Collision collision)
+		{
+			if(collision.gameObject.name == "PlayerTarget(Clone)")
+			{
+				Debug.Log("hit the target");
+				Destroy(target);
+			}
+		}
+	}
 }
