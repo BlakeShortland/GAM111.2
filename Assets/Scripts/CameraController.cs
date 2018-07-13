@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	Transform player; // Stores the player transform.
-	Vector3 targetPosition; // Stores the target vector.
+	Vector3 playerPosition; // Stores the player vector.
 	Camera mainCamera; // Stores the camera component of the main camera.
 
 	[SerializeField]
@@ -23,16 +23,21 @@ public class CameraController : MonoBehaviour
 	
 	void Update ()
 	{
-		MatchTargetPosition(); // Run the Match Target Position function.
+		MatchPlayerPosition(); // Run the Match Target Position function.
 
 		CheckInputs();
 	}
 
-	void MatchTargetPosition ()
+	void MatchPlayerPosition ()
 	{
-		targetPosition = new Vector3(player.position.x, player.position.y + 10, player.position.z + 2); // Sets the target position 10 units above the player and 2 units down screen from the player.
-		transform.position = Vector3.MoveTowards(transform.position, targetPosition, 100f); // Moves the camera towards the start position.
-		mainCamera.depth = player.transform.position.y + 4; // Changes the "height" of the camear depending on what level the player is on.
+		if (player != null)
+		{
+			playerPosition = new Vector3(player.position.x, player.position.y + 10, player.position.z + 2); // Sets the target position 10 units above the player and 2 units down screen from the player.
+			transform.position = Vector3.MoveTowards(transform.position, playerPosition, 100f); // Moves the camera towards the start position.
+			mainCamera.depth = player.transform.position.y + 4; // Changes the "height" of the camear depending on what level the player is on.
+			return;
+		}
+		Debug.Log("Designate the player game object by tagging it as player.");
 	}
 
 	void CheckInputs ()
