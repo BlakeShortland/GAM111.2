@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
 		{
 			if(playerTarget != null)
 			{
-				Instantiate(playerTarget, hit.point, transform.rotation);
+				Instantiate(playerTarget, hit.point, Quaternion.Euler(90f,0f,0f));
 			}
 			else
 			{
