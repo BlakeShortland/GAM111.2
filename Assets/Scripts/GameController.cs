@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-	[System.Serializable] struct player
+	[System.Serializable] struct Player
 	{
 		public int health;
 		public int damage;
@@ -19,8 +19,7 @@ public class GameController : MonoBehaviour
 		public Color myColor;
 	}
 
-	[System.Serializable]
-	struct enemy
+	[System.Serializable] struct Enemy
 	{
 		public int health;
 		public int damage;
@@ -30,8 +29,8 @@ public class GameController : MonoBehaviour
 		public bool isDead;
 	}
 
-	[SerializeField] player playerStruct;
-	[SerializeField] enemy[] enemyStructArray;
+	[SerializeField] Player playerStruct;
+	[SerializeField] Enemy[] enemyStructArray;
 
 	[SerializeField] int skillPointsAvailable = 10;
 	[SerializeField] int maxSkillPointsPerSkill = 5;
@@ -40,14 +39,16 @@ public class GameController : MonoBehaviour
 
 	public static Color colorToSet;
 
-	void Start ()
+	int enemyID;
+
+	void Start()
 	{
 		RandomiseEnemies();
 	}
-	
-	void Update ()
+
+	void Update()
 	{
-		
+
 	}
 
 	void RandomiseEnemies()
@@ -102,8 +103,10 @@ public class GameController : MonoBehaviour
 		return skillPointsUsed;
 	}
 
-	public void EnterBattleMode()
+	public void EnterBattleMode(int ID)
 	{
+		enemyID = ID;
+
 		battleMode = true;
 
 		SceneManager.LoadScene("BattleScene");
@@ -117,5 +120,27 @@ public class GameController : MonoBehaviour
 			SceneManager.LoadScene("MainMenu");
 		else
 			SceneManager.LoadScene("Game");
+	}
+
+	public void SendBattleData()
+	{
+		BattleController.playerHealth = playerStruct.health;
+		BattleController.playerDamage = playerStruct.damage;
+		BattleController.playerSpeed = playerStruct.speed;
+
+		BattleController.enemyHealth = enemyStructArray[enemyID].health;
+		BattleController.enemyDamage = enemyStructArray[enemyID].damage;
+		BattleController.enemySpeed = enemyStructArray[enemyID].speed;
+	}
+
+	public void RecieveBattleData()
+	{
+		playerStruct.health = BattleController.playerHealth;
+		playerStruct.damage = BattleController.playerDamage;
+		playerStruct.speed = BattleController.playerSpeed;
+
+		enemyStructArray[enemyID].health = BattleController.enemyHealth;
+		enemyStructArray[enemyID].damage = BattleController.enemyDamage;
+		enemyStructArray[enemyID].speed = BattleController.enemySpeed;
 	}
 }

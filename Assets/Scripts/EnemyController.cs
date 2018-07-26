@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+	[SerializeField] int myID;
+
 	Material myMaterial;
 
 	bool isDead = false;
@@ -49,7 +51,7 @@ public class EnemyController : MonoBehaviour
 		{
 			if (hit.transform.tag == "Player")
 			{
-				gameController.GetComponent<GameController>().EnterBattleMode();
+				gameController.GetComponent<GameController>().EnterBattleMode(myID);
 			}
 		}
 
