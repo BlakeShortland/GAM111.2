@@ -16,7 +16,7 @@ public class BattleController : MonoBehaviour
 
 	GameObject gameController;
 
-	bool playersTurn;
+	public static bool playersTurn;
 	bool playerMadeMove = false;
 	bool enemyMadeMove = false;
 
@@ -40,8 +40,8 @@ public class BattleController : MonoBehaviour
 
 	void GetComponents ()
 	{
-		gameController.GetComponent<GameController>().SendBattleData();
 		gameController = GameObject.FindGameObjectWithTag("GameController");
+		gameController.GetComponent<GameController>().SendBattleData();
 	}
 
 	void CheckWhoseTurn()
@@ -56,12 +56,16 @@ public class BattleController : MonoBehaviour
 	{
 		while (playerMadeMove != true)
 			yield return null;
+
+		playersTurn = false;
 	}
 
 	IEnumerator EnemysTurn()
 	{
 		while (enemyMadeMove != true)
 			yield return null;
+
+		playersTurn = true;
 	}
 
 	public void Attack ()

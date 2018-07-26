@@ -15,7 +15,13 @@ public class UIController : MonoBehaviour
 	[SerializeField] Text redSliderValueText;
 	[SerializeField] Text greenSliderValueText;
 	[SerializeField] Text blueSliderValueText;
+	[SerializeField] Text playerHealthText;
+	[SerializeField] Text playerPotionsText;
+	[SerializeField] Text enemyHealthText;
+	[SerializeField] Text enemyPotionsText;
 
+	[SerializeField] Button attackButton;
+	[SerializeField] Button defendButton;
 	[SerializeField] Button healButton;
 
 	Image fadeImage;
@@ -47,12 +53,29 @@ public class UIController : MonoBehaviour
 			FadeFromBlack();
 		}
 
-		if (SceneManager.GetActiveScene().name == "Game")
+		if (SceneManager.GetActiveScene().name == "BattleScene")
 		{
-			if (BattleController.playerHealthPotions <= 0)
-				healButton.interactable = false;
+			if (BattleController.playersTurn)
+			{
+				attackButton.interactable = true;
+				defendButton.interactable = true;
+
+				if (BattleController.playerHealthPotions <= 0)
+					healButton.interactable = false;
+				else
+					healButton.interactable = true;
+			}
 			else
-				healButton.interactable = true;
+			{
+				attackButton.interactable = false;
+				defendButton.interactable = false;
+				healButton.interactable = false;
+			}
+
+			playerHealthText.text = ("Health: " + BattleController.playerHealth.ToString() + " ");
+			playerPotionsText.text = ("Health Potions: " + BattleController.playerHealthPotions.ToString() + " ");
+			enemyHealthText.text = ("Health: " + BattleController.enemyHealth.ToString() + " ");
+			enemyPotionsText.text = ("Health Potions: " + BattleController.enemyHealthPotions.ToString() + " ");
 		}
 	}
 
@@ -73,8 +96,12 @@ public class UIController : MonoBehaviour
 			fadeImage = fadeImageObject.GetComponentInChildren<Image>();
 		}
 
-		if (SceneManager.GetActiveScene().name == "Game")
+		if (SceneManager.GetActiveScene().name == "BattleScene")
+		{
+			attackButton = GameObject.Find("Attack Button").GetComponent<Button>();
+			defendButton = GameObject.Find("Defend Button").GetComponent<Button>();
 			healButton = GameObject.Find("Heal Button").GetComponent<Button>();
+		}
 	}
 
 	void FadeFromBlack()
