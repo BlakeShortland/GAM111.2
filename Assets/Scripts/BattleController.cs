@@ -74,7 +74,9 @@ public class BattleController : MonoBehaviour
 		}
 		else
 		{
+			playerHealth -= enemyDamage;
 
+			enemyMadeMove = true;
 		}
 	}
 
@@ -89,7 +91,10 @@ public class BattleController : MonoBehaviour
 		}
 		else
 		{
+			if (playerDamage > 1)
+				playerDamage -= 1;
 
+			enemyMadeMove = true;
 		}
 	}
 
@@ -98,13 +103,22 @@ public class BattleController : MonoBehaviour
 		if (playersTurn)
 		{
 			if (playerHealthPotions > 0)
+			{
 				playerHealth += GameController.maxSkillPointsPerSkill - playerHealth;
+				playerHealthPotions--;
+			}
 
 			playerMadeMove = true;
 		}
 		else
 		{
+			if (enemyHealthPotions > 0)
+			{
+				enemyHealth += GameController.maxSkillPointsPerSkill - enemyHealth;
+				enemyHealthPotions--;
+			}
 
+			enemyMadeMove = true;
 		}
 	}
 
@@ -114,8 +128,26 @@ public class BattleController : MonoBehaviour
 
 		if (LowHealth(enemyHealth))
 		{
-
+			if (roll > 5)
+				Heal();
+			else
+				AttackDefend();
 		}
+		else
+		{
+			if (roll < 5)
+				Heal();
+			else
+				AttackDefend();
+		}
+	}
+
+	public void AttackDefend()
+	{
+		if (Attacking())
+			Attack();
+		else
+			Defend();
 	}
 
 	bool LowHealth(int health)

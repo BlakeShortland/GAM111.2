@@ -16,6 +16,8 @@ public class UIController : MonoBehaviour
 	[SerializeField] Text greenSliderValueText;
 	[SerializeField] Text blueSliderValueText;
 
+	[SerializeField] Button healButton;
+
 	Image fadeImage;
 
 	bool fading = true;
@@ -44,6 +46,14 @@ public class UIController : MonoBehaviour
 		{
 			FadeFromBlack();
 		}
+
+		if (SceneManager.GetActiveScene().name == "Game")
+		{
+			if (BattleController.playerHealthPotions <= 0)
+				healButton.interactable = false;
+			else
+				healButton.interactable = true;
+		}
 	}
 
 	void SetUpSliders()
@@ -62,6 +72,9 @@ public class UIController : MonoBehaviour
 			fadeImageObject = GameObject.Find("FadeFromBlackContainer");
 			fadeImage = fadeImageObject.GetComponentInChildren<Image>();
 		}
+
+		if (SceneManager.GetActiveScene().name == "Game")
+			healButton = GameObject.Find("Heal Button").GetComponent<Button>();
 	}
 
 	void FadeFromBlack()
