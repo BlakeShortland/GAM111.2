@@ -7,10 +7,12 @@ public class BattleController : MonoBehaviour
 	public static int playerHealth;
 	public static int playerDamage;
 	public static int playerSpeed;
+	public static int playerHealthPotions;
 
 	public static int enemyHealth;
 	public static int enemyDamage;
 	public static int enemySpeed;
+	public static int enemyHealthPotions;
 
 	GameObject gameController;
 
@@ -66,7 +68,9 @@ public class BattleController : MonoBehaviour
 	{
 		if (playersTurn)
 		{
+			enemyHealth -= playerDamage;
 
+			playerMadeMove = true;
 		}
 		else
 		{
@@ -78,7 +82,10 @@ public class BattleController : MonoBehaviour
 	{
 		if (playersTurn)
 		{
+			if (enemyDamage > 1)
+				enemyDamage -= 1;
 
+			playerMadeMove = true;
 		}
 		else
 		{
@@ -90,11 +97,42 @@ public class BattleController : MonoBehaviour
 	{
 		if (playersTurn)
 		{
+			if (playerHealthPotions > 0)
+				playerHealth += GameController.maxSkillPointsPerSkill - playerHealth;
 
+			playerMadeMove = true;
 		}
 		else
 		{
 
 		}
+	}
+
+	public void EnemyBattleAI()
+	{
+		int roll = Random.Range(1, 21);
+
+		if (LowHealth(enemyHealth))
+		{
+
+		}
+	}
+
+	bool LowHealth(int health)
+	{
+		if (health < GameController.maxSkillPointsPerSkill / 2)
+			return true;
+		else
+			return false;
+	}
+
+	bool Attacking()
+	{
+		int roll = Random.Range(0,1);
+
+		if (roll != 0)
+			return true;
+		else
+			return false;
 	}
 }

@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 		public int damage;
 		public int speed;
 		public int skillPointsRemaining;
+		public int healthPotions;
 
 		public Transform playTransform;
 
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour
 		public int damage;
 		public int speed;
 		public int skillPointsRemaining;
+		public int healthPotions;
 
 		public bool isDead;
 	}
@@ -32,8 +34,8 @@ public class GameController : MonoBehaviour
 	[SerializeField] Player playerStruct;
 	[SerializeField] Enemy[] enemyStructArray;
 
-	[SerializeField] int skillPointsAvailable = 10;
-	[SerializeField] int maxSkillPointsPerSkill = 5;
+	public static int skillPointsAvailable = 10;
+	public static int maxSkillPointsPerSkill = 5;
 
 	public bool battleMode = false;
 
@@ -103,9 +105,9 @@ public class GameController : MonoBehaviour
 		return skillPointsUsed;
 	}
 
-	public void EnterBattleMode(int ID)
+	public void EnterBattleMode()
 	{
-		enemyID = ID;
+		enemyID = Random.Range(0,enemyStructArray.Length - 1);
 
 		battleMode = true;
 
@@ -127,10 +129,12 @@ public class GameController : MonoBehaviour
 		BattleController.playerHealth = playerStruct.health;
 		BattleController.playerDamage = playerStruct.damage;
 		BattleController.playerSpeed = playerStruct.speed;
+		BattleController.playerHealthPotions = playerStruct.healthPotions;
 
 		BattleController.enemyHealth = enemyStructArray[enemyID].health;
 		BattleController.enemyDamage = enemyStructArray[enemyID].damage;
 		BattleController.enemySpeed = enemyStructArray[enemyID].speed;
+		BattleController.enemyHealthPotions = enemyStructArray[enemyID].healthPotions;
 	}
 
 	public void RecieveBattleData()
@@ -138,9 +142,11 @@ public class GameController : MonoBehaviour
 		playerStruct.health = BattleController.playerHealth;
 		playerStruct.damage = BattleController.playerDamage;
 		playerStruct.speed = BattleController.playerSpeed;
+		playerStruct.healthPotions = BattleController.playerHealthPotions;
 
 		enemyStructArray[enemyID].health = BattleController.enemyHealth;
 		enemyStructArray[enemyID].damage = BattleController.enemyDamage;
 		enemyStructArray[enemyID].speed = BattleController.enemySpeed;
+		enemyStructArray[enemyID].healthPotions = BattleController.enemyHealthPotions;
 	}
 }
