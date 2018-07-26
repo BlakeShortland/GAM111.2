@@ -23,10 +23,12 @@ public class UIController : MonoBehaviour
 	[SerializeField] Text attackSliderValueText;
 	[SerializeField] Text healthSliderValueText;
 	[SerializeField] Text speedSliderValueText;
+	[SerializeField] Text skillPointsLeftText;
 
 	[SerializeField] Button attackButton;
 	[SerializeField] Button defendButton;
 	[SerializeField] Button healButton;
+	[SerializeField] Button ContinueButton;
 
 	public static int playerAttack;
 	public static int playerHealth;
@@ -180,11 +182,18 @@ public class UIController : MonoBehaviour
 		healthSliderValueText.text = (" " + healthSlider.value.ToString());
 		speedSliderValueText.text = (" " + speedSlider.value.ToString());
 
-		 playerAttack = Mathf.RoundToInt(attackSlider.value);
-		 playerHealth = Mathf.RoundToInt(healthSlider.value);
-		 playerSpeed = Mathf.RoundToInt(speedSlider.value);
+		playerAttack = Mathf.RoundToInt(attackSlider.value);
+		playerHealth = Mathf.RoundToInt(healthSlider.value);
+		playerSpeed = Mathf.RoundToInt(speedSlider.value);
 
-		Debug.Log(playerAttack);
+		int skillPointsLeft = GameController.skillPointsAvailable - playerAttack - playerHealth - playerSpeed;
+
+		if (skillPointsLeft == 0)
+			ContinueButton.interactable = true;
+		else
+			ContinueButton.interactable = false;
+
+		skillPointsLeftText.text = "Skill Points Left: " + (skillPointsLeft).ToString();
 	}
 
 	public bool UsingFadeIn()
