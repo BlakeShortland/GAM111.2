@@ -5,17 +5,30 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+	Material myMaterial;
 
 	GameObject target; // Stores the target postion for the player to move to.
 
 	void Start ()
 	{
-		
+		GetComponents();
+
+		SetMyColor();
 	}
 	
 	void Update ()
 	{
 		MoveToTarget(); // Runs my MoveToTarget function.
+	}
+
+	void GetComponents()
+	{
+		myMaterial = GetComponent<Renderer>().material;
+	}
+
+	void SetMyColor()
+	{
+		myMaterial.color = GameController.colorToSet;
 	}
 
 	void MoveToTarget()

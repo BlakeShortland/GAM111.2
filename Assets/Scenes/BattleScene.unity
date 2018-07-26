@@ -214,7 +214,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh31296
+  m_Name: pb_Mesh18110
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -406,7 +406,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh31322
+  m_Name: pb_Mesh18146
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 1225484463}
   - component: {fileID: 1225484462}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4873,7 +4873,7 @@ GameObject:
   - component: {fileID: 1688835881}
   - component: {fileID: 1688835880}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Sand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
