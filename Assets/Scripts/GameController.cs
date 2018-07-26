@@ -13,6 +13,6 @@ public class GameController : MonoBehaviour
 	
 	void Update ()
 	{
-		Debug.Log(battleMode);
+
 	}
 }

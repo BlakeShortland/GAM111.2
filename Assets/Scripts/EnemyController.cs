@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -11,9 +12,21 @@ public class EnemyController : MonoBehaviour
 
 	GameObject gameController;
 
+	public NavMeshAgent agent;
+	public Transform[] waypoints;
+	public float targetThreshold = 0f;
+	private int currentWaypointIndex = 0;
+	private Transform target;
+
 	void Start ()
 	{
 		GetComponents();
+
+		if (waypoints.Length != 0)
+		{
+			//Setup initial target based on the first waypoint
+			target = waypoints[0];
+		}		
 	}
 	
 	void Update ()
@@ -21,6 +34,8 @@ public class EnemyController : MonoBehaviour
 		DeadCheck();
 
 		RayCast();
+
+		Patrol();
 	}
 
 	void RayCast ()
@@ -51,5 +66,30 @@ public class EnemyController : MonoBehaviour
 	void GetComponents ()
 	{
 		myMaterial = GetComponent<Renderer>().material;
+	}
+
+	void Patrol ()
+	{
+		//Do not patrol if there is more than one waypoint
+		if (waypoints.Length != 0)
+		{
+			agent.SetDestination(target.position);
+			//If the enemy has reached the current waypoint, iterate to the next waypoint
+			if ((transform.position - target.position).magnitude <= targetThreshold)
+			{
+				UpdateWaypoint();
+			}
+		}
+	}
+
+	void UpdateWaypoint()
+	{
+		currentWaypointIndex++;
+		if (currentWaypointIndex >= waypoints.Length)
+		{
+			currentWaypointIndex = 0;
+		}
+
+		target = waypoints[currentWaypointIndex];
 	}
 }
