@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
 
 	void Update()
 	{
-
+		
 	}
 
 	void RandomiseEnemies()
@@ -124,7 +124,7 @@ public class GameController : MonoBehaviour
 			SceneManager.LoadScene("Game");
 	}
 
-	public void SendBattleData()
+	public void SendBattleDataToBattleController()
 	{
 		BattleController.playerHealth = playerStruct.health;
 		BattleController.playerDamage = playerStruct.damage;
@@ -137,7 +137,7 @@ public class GameController : MonoBehaviour
 		BattleController.enemyHealthPotions = enemyStructArray[enemyID].healthPotions;
 	}
 
-	public void RecieveBattleData()
+	public void RecieveBattleDataFromBattleController()
 	{
 		playerStruct.health = BattleController.playerHealth;
 		playerStruct.damage = BattleController.playerDamage;
@@ -148,5 +148,20 @@ public class GameController : MonoBehaviour
 		enemyStructArray[enemyID].damage = BattleController.enemyDamage;
 		enemyStructArray[enemyID].speed = BattleController.enemySpeed;
 		enemyStructArray[enemyID].healthPotions = BattleController.enemyHealthPotions;
+	}
+
+	public void SendPlayerDataToUIController()
+	{
+		UIController.playerHealth = playerStruct.health;
+		UIController.playerAttack = playerStruct.damage;
+		UIController.playerSpeed = playerStruct.speed;
+		
+	}
+
+	public void RecievePlayerDataFromUIController()
+	{
+		playerStruct.health = UIController.playerHealth;
+		playerStruct.damage = UIController.playerAttack;
+		playerStruct.speed = UIController.playerSpeed;
 	}
 }

@@ -36,12 +36,14 @@ public class BattleController : MonoBehaviour
 			StartCoroutine(PlayersTurn());
 		else
 			StartCoroutine(EnemysTurn());
+
+		DeadCheck();
 	}
 
 	void GetComponents ()
 	{
 		gameController = GameObject.FindGameObjectWithTag("GameController");
-		gameController.GetComponent<GameController>().SendBattleData();
+		gameController.GetComponent<GameController>().SendBattleDataToBattleController();
 	}
 
 	void CheckWhoseTurn()
@@ -66,6 +68,11 @@ public class BattleController : MonoBehaviour
 			yield return null;
 
 		playersTurn = true;
+	}
+
+	public void DeadCheck()
+	{
+
 	}
 
 	public void Attack ()

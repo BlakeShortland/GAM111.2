@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +9,9 @@ public class UIController : MonoBehaviour
 	[SerializeField] Slider redSlider;
 	[SerializeField] Slider greenSlider;
 	[SerializeField] Slider blueSlider;
+	[SerializeField] Slider attackSlider;
+	[SerializeField] Slider healthSlider;
+	[SerializeField] Slider speedSlider;
 
 	[SerializeField] Text redSliderValueText;
 	[SerializeField] Text greenSliderValueText;
@@ -19,12 +20,21 @@ public class UIController : MonoBehaviour
 	[SerializeField] Text playerPotionsText;
 	[SerializeField] Text enemyHealthText;
 	[SerializeField] Text enemyPotionsText;
+	[SerializeField] Text attackSliderValueText;
+	[SerializeField] Text healthSliderValueText;
+	[SerializeField] Text speedSliderValueText;
 
 	[SerializeField] Button attackButton;
 	[SerializeField] Button defendButton;
 	[SerializeField] Button healButton;
 
+	public static int playerAttack;
+	public static int playerHealth;
+	public static int playerSpeed;
+
 	Image fadeImage;
+
+	GameObject gameController;
 
 	bool fading = true;
 
@@ -85,6 +95,15 @@ public class UIController : MonoBehaviour
 		greenSlider.onValueChanged.AddListener(delegate { SetPlayerColor(); });
 		blueSlider.onValueChanged.AddListener(delegate { SetPlayerColor(); });
 
+		attackSlider.onValueChanged.AddListener(delegate { SetPlayerSkillPoints(); });
+		healthSlider.onValueChanged.AddListener(delegate { SetPlayerSkillPoints(); });
+		speedSlider.onValueChanged.AddListener(delegate { SetPlayerSkillPoints(); });
+
+		gameController.GetComponent<GameController>().SendPlayerDataToUIController();
+		attackSlider.value = playerAttack;
+		healthSlider.value = playerHealth;
+		speedSlider.value = playerSpeed;
+
 		SetPlayerColor();
 	}
 
@@ -102,6 +121,8 @@ public class UIController : MonoBehaviour
 			defendButton = GameObject.Find("Defend Button").GetComponent<Button>();
 			healButton = GameObject.Find("Heal Button").GetComponent<Button>();
 		}
+
+		gameController = GameObject.FindGameObjectWithTag("GameController");
 	}
 
 	void FadeFromBlack()
@@ -149,6 +170,21 @@ public class UIController : MonoBehaviour
 		redSliderValueText.text = (" " + redSlider.value.ToString());
 		greenSliderValueText.text = (" " + greenSlider.value.ToString());
 		blueSliderValueText.text = (" " + blueSlider.value.ToString());
+	}
+
+	public void SetPlayerSkillPoints()
+	{
+		gameController.GetComponent<GameController>().RecievePlayerDataFromUIController();
+
+		attackSliderValueText.text = (" " + attackSlider.value.ToString());
+		healthSliderValueText.text = (" " + healthSlider.value.ToString());
+		speedSliderValueText.text = (" " + speedSlider.value.ToString());
+
+		 playerAttack = Mathf.RoundToInt(attackSlider.value);
+		 playerHealth = Mathf.RoundToInt(healthSlider.value);
+		 playerSpeed = Mathf.RoundToInt(speedSlider.value);
+
+		Debug.Log(playerAttack);
 	}
 
 	public bool UsingFadeIn()
