@@ -3887,9 +3887,19 @@ Prefab:
       propertyPath: m_AngularSpeed
       value: 1440
       objectReference: {fileID: 0}
+    - target: {fileID: 114798725019921330, guid: edcea023956f2074fae51607c933753e,
+        type: 2}
+      propertyPath: myTransform
+      value: 
+      objectReference: {fileID: 563953245}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: edcea023956f2074fae51607c933753e, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &563953245 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4742774903313220, guid: edcea023956f2074fae51607c933753e,
+    type: 2}
+  m_PrefabInternal: {fileID: 563953244}
 --- !u!43 &591758650
 Mesh:
   m_ObjectHideFlags: 0
@@ -15166,6 +15176,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImageObject: {fileID: 1216309141}
+  redSlider: {fileID: 0}
+  greenSlider: {fileID: 0}
+  blueSlider: {fileID: 0}
+  attackSlider: {fileID: 0}
+  healthSlider: {fileID: 0}
+  speedSlider: {fileID: 0}
+  redSliderValueText: {fileID: 0}
+  greenSliderValueText: {fileID: 0}
+  blueSliderValueText: {fileID: 0}
+  playerHealthText: {fileID: 0}
+  playerPotionsText: {fileID: 0}
+  enemyHealthText: {fileID: 0}
+  enemyPotionsText: {fileID: 0}
+  attackSliderValueText: {fileID: 0}
+  healthSliderValueText: {fileID: 0}
+  speedSliderValueText: {fileID: 0}
+  skillPointsLeftText: {fileID: 0}
+  attackButton: {fileID: 0}
+  defendButton: {fileID: 0}
+  healButton: {fileID: 0}
+  ContinueButton: {fileID: 0}
 --- !u!114 &2012907751
 MonoBehaviour:
   m_ObjectHideFlags: 0

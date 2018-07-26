@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class BattleController : MonoBehaviour
 	public static bool playersTurn;
 	bool playerMadeMove = false;
 	bool enemyMadeMove = false;
+	bool gamePlaying = true;
 
 	void Awake()
 	{
@@ -28,16 +30,13 @@ public class BattleController : MonoBehaviour
 	void Start ()
 	{
 		CheckWhoseTurn();
+
+		StartCoroutine(GameLoop());
 	}
 	
 	void Update ()
 	{
-		if (playersTurn)
-			StartCoroutine(PlayersTurn());
-		else
-			StartCoroutine(EnemysTurn());
-
-		DeadCheck();
+		
 	}
 
 	void GetComponents ()
@@ -54,8 +53,25 @@ public class BattleController : MonoBehaviour
 			playersTurn = false;
 	}
 
+	IEnumerator GameLoop ()
+	{
+		while (gamePlaying)
+		{
+			if (playersTurn)
+				StartCoroutine(PlayersTurn());
+			else
+				StartCoroutine(EnemysTurn());
+
+			DeadCheck();
+
+			yield return new WaitForSecondsRealtime(2);
+		}
+	}
+
 	IEnumerator PlayersTurn ()
 	{
+		playerMadeMove = false;
+
 		while (playerMadeMove != true)
 			yield return null;
 
@@ -64,6 +80,8 @@ public class BattleController : MonoBehaviour
 
 	IEnumerator EnemysTurn()
 	{
+		enemyMadeMove = false;
+
 		while (enemyMadeMove != true)
 			yield return null;
 
@@ -72,7 +90,10 @@ public class BattleController : MonoBehaviour
 
 	public void DeadCheck()
 	{
-
+		if (playerHealth <= 0)
+			SceneManager.LoadScene("MainMenu");
+		if (enemyHealth <= 0)
+			SceneManager.LoadScene("Game");
 	}
 
 	public void Attack ()
@@ -82,12 +103,16 @@ public class BattleController : MonoBehaviour
 			enemyHealth -= playerDamage;
 
 			playerMadeMove = true;
+
+			Debug.Log("Player attacking.");
 		}
 		else
 		{
 			playerHealth -= enemyDamage;
 
 			enemyMadeMove = true;
+
+			Debug.Log("Enemy attacking.");
 		}
 	}
 
@@ -99,6 +124,8 @@ public class BattleController : MonoBehaviour
 				enemyDamage -= 1;
 
 			playerMadeMove = true;
+
+			Debug.Log("Player defending.");
 		}
 		else
 		{
@@ -106,6 +133,8 @@ public class BattleController : MonoBehaviour
 				playerDamage -= 1;
 
 			enemyMadeMove = true;
+
+			Debug.Log("Enemy defending.");
 		}
 	}
 
@@ -120,6 +149,8 @@ public class BattleController : MonoBehaviour
 			}
 
 			playerMadeMove = true;
+
+			Debug.Log("Player healing.");
 		}
 		else
 		{
@@ -130,6 +161,8 @@ public class BattleController : MonoBehaviour
 			}
 
 			enemyMadeMove = true;
+
+			Debug.Log("Enemy healing.");
 		}
 	}
 

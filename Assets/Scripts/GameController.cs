@@ -13,8 +13,6 @@ public class GameController : MonoBehaviour
 		public int skillPointsRemaining;
 		public int healthPotions;
 
-		public Transform playTransform;
-
 		public bool isDead;
 
 		public Color myColor;
@@ -34,6 +32,8 @@ public class GameController : MonoBehaviour
 	[SerializeField] Player playerStruct;
 	[SerializeField] Enemy[] enemyStructArray;
 
+	public static Transform playerTransform;
+
 	public static int skillPointsAvailable = 10;
 	public static int maxSkillPointsPerSkill = 5;
 
@@ -46,11 +46,6 @@ public class GameController : MonoBehaviour
 	void Start()
 	{
 		RandomiseEnemies();
-	}
-
-	void Update()
-	{
-		
 	}
 
 	void RandomiseEnemies()
@@ -112,16 +107,6 @@ public class GameController : MonoBehaviour
 		battleMode = true;
 
 		SceneManager.LoadScene("BattleScene");
-	}
-
-	public void ExitBattleMode()
-	{
-		battleMode = false;
-
-		if (playerStruct.isDead)
-			SceneManager.LoadScene("MainMenu");
-		else
-			SceneManager.LoadScene("Game");
 	}
 
 	public void SendBattleDataToBattleController()
