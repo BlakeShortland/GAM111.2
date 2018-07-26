@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-	public static bool battleMode = false;
+	public bool battleMode = false;
 
 	void Start ()
 	{
@@ -13,6 +14,20 @@ public class GameController : MonoBehaviour
 	
 	void Update ()
 	{
+		
+	}
 
+	public void EnterBattleMode()
+	{
+		battleMode = true;
+
+		SceneManager.LoadScene(2);
+	}
+
+	public void ExitBattleMode()
+	{
+		battleMode = false;
+
+		SceneManager.LoadScene(1);
 	}
 }

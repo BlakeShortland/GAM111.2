@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-
 	Material myMaterial;
 
 	bool isDead = false;
@@ -20,6 +19,8 @@ public class EnemyController : MonoBehaviour
 
 	void Start ()
 	{
+		gameController = GameObject.FindGameObjectWithTag("GameController");
+
 		GetComponents();
 
 		if (waypoints.Length != 0)
@@ -33,9 +34,11 @@ public class EnemyController : MonoBehaviour
 	{
 		DeadCheck();
 
-		RayCast();
-
-		Patrol();
+		if(isDead == false)
+		{
+			RayCast();
+			Patrol();
+		}
 	}
 
 	void RayCast ()
@@ -46,7 +49,7 @@ public class EnemyController : MonoBehaviour
 		{
 			if (hit.transform.tag == "Player")
 			{
-				GameController.battleMode = true;
+				gameController.GetComponent<GameController>().EnterBattleMode();
 			}
 		}
 
