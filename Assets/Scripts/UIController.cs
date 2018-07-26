@@ -27,6 +27,11 @@ public class UIController : MonoBehaviour
 
 	void Start()
 	{
+		if (SceneManager.GetActiveScene().name == "MainMenu")
+		{
+			GameController.colorToSet = new Color32((byte)0, (byte)255, (byte)0, (byte)255);
+		}
+
 		if (SceneManager.GetActiveScene().name == "CharacterCreator")
 		{
 			SetUpSliders();
