@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
 		RandomiseEnemies();
 	}
 
+	//A series of functions that randomise the enemies and atificially get them to "spend" skill points
 	void RandomiseEnemies()
 	{
 		int i;
@@ -68,7 +69,6 @@ public class GameController : MonoBehaviour
 			enemyStructArray[i].skillPointsRemaining -= enemyStructArray[i].speed;
 		}
 	}
-
 	int GiveRandomSkillPoints(int skillPoints)
 	{
 		int skillPointsUsed;
@@ -77,7 +77,6 @@ public class GameController : MonoBehaviour
 
 		return skillPointsUsed;
 	}
-
 	int MaxSkillPointsToApply(int skillPointsLeft)
 	{
 		int maxSkillPoints;
@@ -89,7 +88,6 @@ public class GameController : MonoBehaviour
 
 		return maxSkillPoints;
 	}
-
 	int GiveRemainingSkillPoints(int skillPointsRemaining)
 	{
 		int skillPointsUsed;
@@ -108,6 +106,7 @@ public class GameController : MonoBehaviour
 		SceneManager.LoadScene("BattleScene");
 	}
 
+	//A function to send the relevant data to the battle controller
 	public void SendBattleDataToBattleController()
 	{
 		BattleController.playerHealth = playerStruct.health;
@@ -121,6 +120,7 @@ public class GameController : MonoBehaviour
 		BattleController.enemyHealthPotions = enemyStructArray[enemyID].healthPotions;
 	}
 
+	//A function to recieve the relevant data from the battle controller
 	public void RecieveBattleDataFromBattleController()
 	{
 		playerStruct.health = BattleController.playerHealth;
@@ -134,6 +134,7 @@ public class GameController : MonoBehaviour
 		enemyStructArray[enemyID].healthPotions = BattleController.enemyHealthPotions;
 	}
 
+	//A function to send the relevant data to the ui controller
 	public void SendPlayerDataToUIController()
 	{
 		UIController.playerHealth = playerStruct.health;
@@ -142,6 +143,7 @@ public class GameController : MonoBehaviour
 		
 	}
 
+	//A function to recieve the relevant data from the ui controller
 	public void RecievePlayerDataFromUIController()
 	{
 		playerStruct.health = UIController.playerHealth;

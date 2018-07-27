@@ -5,18 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class BattleController : MonoBehaviour
 {
+	//Player stats
 	public static int playerHealth;
 	public static int playerDamage;
 	public static int playerSpeed;
 	public static int playerHealthPotions;
 
+	//Enemy stats
 	public static int enemyHealth;
 	public static int enemyDamage;
 	public static int enemySpeed;
 	public static int enemyHealthPotions;
 
+	//Game controller container
 	GameObject gameController;
 
+	//Booleans for managing the turn system
 	public static bool playersTurn;
 	bool playerMadeMove = false;
 	bool enemyMadeMove = false;
@@ -24,7 +28,8 @@ public class BattleController : MonoBehaviour
 
 	void Awake()
 	{
-		GetComponents();
+		gameController = GameObject.FindGameObjectWithTag("GameController");
+		gameController.GetComponent<GameController>().SendBattleDataToBattleController();
 	}
 
 	void Start ()
@@ -33,18 +38,8 @@ public class BattleController : MonoBehaviour
 
 		StartCoroutine(GameLoop());
 	}
-	
-	void Update ()
-	{
-		
-	}
 
-	void GetComponents ()
-	{
-		gameController = GameObject.FindGameObjectWithTag("GameController");
-		gameController.GetComponent<GameController>().SendBattleDataToBattleController();
-	}
-
+	//This function detirmins who goes first
 	void CheckWhoseTurn()
 	{
 		if (playerSpeed >= enemySpeed)
@@ -53,6 +48,7 @@ public class BattleController : MonoBehaviour
 			playersTurn = false;
 	}
 
+	//This IEnumerator was made to replace the Update function, because I believed my game was freezing when the lower coroutines were yielding. It turned out to be a UI element that was blocking my clicks, but this IEnumerator still works seemingly as well.
 	IEnumerator GameLoop ()
 	{
 		while (gamePlaying)
@@ -64,6 +60,7 @@ public class BattleController : MonoBehaviour
 
 			DeadCheck();
 
+			//Wait 2 seconds before continuing to allow speech pop ups to be readable
 			yield return new WaitForSecondsRealtime(2);
 		}
 	}
@@ -90,6 +87,7 @@ public class BattleController : MonoBehaviour
 		playersTurn = true;
 	}
 
+	//If the player or the enemy is defeated, leave the battle scene
 	public void DeadCheck()
 	{
 		if (playerHealth <= 0)
@@ -98,6 +96,7 @@ public class BattleController : MonoBehaviour
 			SceneManager.LoadScene("Game");
 	}
 
+	//Depending on whose turn it is, take away the damage from the oposing health
 	public void Attack ()
 	{
 		if (playersTurn)
@@ -118,6 +117,7 @@ public class BattleController : MonoBehaviour
 		}
 	}
 
+	//If someone defends then the opponents damage is reduced for the remainder of the battle
 	public void Defend()
 	{
 		if (playersTurn)
@@ -140,6 +140,7 @@ public class BattleController : MonoBehaviour
 		}
 	}
 
+	//If someone has health potions they can heal up to the maximum possible health.
 	public void Heal()
 	{
 		if (playersTurn)
@@ -168,6 +169,7 @@ public class BattleController : MonoBehaviour
 		}
 	}
 
+	//Detirmines what move the enemy makes using a simulated D20
 	public void EnemyBattleAI()
 	{
 		int roll = Random.Range(1, 21);
@@ -188,6 +190,7 @@ public class BattleController : MonoBehaviour
 		}
 	}
 
+	//If attacking, attack. Otherwise defend
 	public void AttackDefend()
 	{
 		if (Attacking())
@@ -196,6 +199,7 @@ public class BattleController : MonoBehaviour
 			Defend();
 	}
 
+	//A boolean to check if the enemy has less than half health. If they do, they are more likely to heal
 	bool LowHealth(int health)
 	{
 		if (health < GameController.maxSkillPointsPerSkill / 2)

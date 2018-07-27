@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-	Material myMaterial;
+	Material myMaterial; // Stores my material
 
 	GameObject target; // Stores the target postion for the player to move to.
 
@@ -28,11 +28,13 @@ public class PlayerController : MonoBehaviour
 		myMaterial = GetComponent<Renderer>().material;
 	}
 
+	//Set my color to the custom color defined in the Game Controller
 	void SetMyColor()
 	{
 		myMaterial.color = GameController.colorToSet;
 	}
 
+	//Move to the target using the navmeshagent
 	void MoveToTarget()
 	{
 		if (GameObject.Find("PlayerTarget(Clone)") != null)
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	//Destroy the target when the player reaches the target
 	void OnCollisionEnter(Collision collision)
 	{
 		if (collision.gameObject.name == "PlayerTarget(Clone)")

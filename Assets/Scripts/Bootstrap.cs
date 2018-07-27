@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
+	//This script keeps my GameController active across all scenes
+
 	void Awake ()
 	{
 		DontDestroyOnLoad(gameObject);

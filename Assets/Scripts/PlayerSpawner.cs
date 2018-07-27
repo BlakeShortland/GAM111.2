@@ -12,25 +12,19 @@ public class PlayerSpawner : MonoBehaviour
 
 	void Start ()
 	{
+		//If there is no playerTransform defined, define it and then spawn the player at the starting position.
 		if (GameController.playerTransform == null)
 		{
 			GameController.playerTransform = playerPrefab.transform;
 			Instantiate(playerPrefab, startPosition, Quaternion.identity);
 		}
+		//Otherwise instantiate at the last position
 		else
 			Instantiate(playerPrefab, GameController.playerTransform.position, Quaternion.identity);
 
 		player = playerPrefab;
 
 		FindPlayer();
-	}
-
-	void Update()
-	{
-		if (GameController.playerTransform != null)
-		{
-			Debug.Log(GameController.playerTransform.position);
-		}
 	}
 
 	public void FindPlayer()

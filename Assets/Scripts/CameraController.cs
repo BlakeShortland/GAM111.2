@@ -36,8 +36,10 @@ public class CameraController : MonoBehaviour
 		Debug.Log("No player detected.");
 	}
 
+	//This function checks for player inputs and runs their respective functions
 	void CheckInputs ()
 	{
+		// Delete the old target and put a new one down then the player clicks
 		if (Input.GetMouseButtonDown(0))
 		{
 			ClearOldTarget();
@@ -45,6 +47,7 @@ public class CameraController : MonoBehaviour
 		}
 	}
 
+	//Set the target location for the player navmesh agent to navigate to
 	void SetPlayerTarget ()
 	{
 		RaycastHit hit;
@@ -63,6 +66,7 @@ public class CameraController : MonoBehaviour
 		}
 	}
 
+	//Delete the old target
 	void ClearOldTarget ()
 	{
 		oldTarget = GameObject.Find("PlayerTarget(Clone)");

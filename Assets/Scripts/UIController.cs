@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+	//This script controls everything UI, whether it's user input, reciting variables, or changing scenes
+	//Different scenes pull what they need from the script and some functions only run on certain scenes
+	//If I were to do this again, I would break it up into multiple scripts
+
 	[SerializeField] GameObject fadeImageObject;
 
 	[SerializeField] Slider redSlider;

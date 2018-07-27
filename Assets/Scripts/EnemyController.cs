@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
+	//Raycast to detect if the player is in view, then switch to the battle scene using the Enter Battle Mode function
 	void RayCast ()
 	{
 		RaycastHit hit;
@@ -57,6 +58,7 @@ public class EnemyController : MonoBehaviour
 		Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.red);
 	}
 
+	//Change the color of the enemy if they are dead
 	void DeadCheck ()
 	{
 		if(isDead)
@@ -67,6 +69,7 @@ public class EnemyController : MonoBehaviour
 		myMaterial.color = Color.red;
 	}
 
+	//My get components script that runs all my get components, keeping it neater in the start function
 	void GetComponents ()
 	{
 		myMaterial = GetComponent<Renderer>().material;
