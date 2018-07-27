@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
 			if (hit.transform.tag == "Player")
 			{
 				gameController.GetComponent<GameController>().EnterBattleMode();
+				isDead = true;
 			}
 		}
 

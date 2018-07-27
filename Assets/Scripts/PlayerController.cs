@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] Transform myTransform;
-
 	Material myMaterial;
 
 	GameObject target; // Stores the target postion for the player to move to.
@@ -16,15 +14,13 @@ public class PlayerController : MonoBehaviour
 		GetComponents();
 
 		SetMyColor();
-
-		SpawnPosition();
 	}
 	
 	void Update ()
 	{
 		MoveToTarget(); // Runs my MoveToTarget function.
 
-		GameController.playerTransform = transform;
+		GameController.playerTransform.position = transform.position;
 	}
 
 	void GetComponents()
@@ -35,14 +31,6 @@ public class PlayerController : MonoBehaviour
 	void SetMyColor()
 	{
 		myMaterial.color = GameController.colorToSet;
-	}
-
-	void SpawnPosition ()
-	{
-		if (GameController.playerTransform == null)
-			GameController.playerTransform = myTransform;
-		else
-			myTransform = GameController.playerTransform;
 	}
 
 	void MoveToTarget()
@@ -59,7 +47,6 @@ public class PlayerController : MonoBehaviour
 	{
 		if (collision.gameObject.name == "PlayerTarget(Clone)")
 		{
-			Debug.Log("hit the target");
 			Destroy(target);
 		}
 	}

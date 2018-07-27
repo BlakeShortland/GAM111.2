@@ -13,8 +13,6 @@ public class GameController : MonoBehaviour
 		public int skillPointsRemaining;
 		public int healthPotions;
 
-		public bool isDead;
-
 		public Color myColor;
 	}
 
@@ -25,12 +23,13 @@ public class GameController : MonoBehaviour
 		public int speed;
 		public int skillPointsRemaining;
 		public int healthPotions;
-
-		public bool isDead;
 	}
 
 	[SerializeField] Player playerStruct;
 	[SerializeField] Enemy[] enemyStructArray;
+
+	[SerializeField] static GameObject enemy1;
+	[SerializeField] static GameObject enemy2;
 
 	public static Transform playerTransform;
 

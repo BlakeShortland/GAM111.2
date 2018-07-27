@@ -55,6 +55,8 @@ public class UIController : MonoBehaviour
 		if (SceneManager.GetActiveScene().name == "CharacterCreator")
 		{
 			SetUpSliders();
+
+			ContinueButton.interactable = false;
 		}
 	}
 
@@ -188,12 +190,12 @@ public class UIController : MonoBehaviour
 
 		int skillPointsLeft = GameController.skillPointsAvailable - playerAttack - playerHealth - playerSpeed;
 
-		if (skillPointsLeft == 0)
+		skillPointsLeftText.text = "Skill Points Left: " + (skillPointsLeft).ToString();
+
+		if (skillPointsLeftText.text == "Skill Points Left: 0")
 			ContinueButton.interactable = true;
 		else
 			ContinueButton.interactable = false;
-
-		skillPointsLeftText.text = "Skill Points Left: " + (skillPointsLeft).ToString();
 	}
 
 	public bool UsingFadeIn()
