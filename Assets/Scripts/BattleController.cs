@@ -82,6 +82,8 @@ public class BattleController : MonoBehaviour
 	{
 		enemyMadeMove = false;
 
+		EnemyBattleAI();
+
 		while (enemyMadeMove != true)
 			yield return null;
 
@@ -102,17 +104,17 @@ public class BattleController : MonoBehaviour
 		{
 			enemyHealth -= playerDamage;
 
-			playerMadeMove = true;
-
 			Debug.Log("Player attacking.");
+
+			playerMadeMove = true;
 		}
 		else
 		{
 			playerHealth -= enemyDamage;
 
-			enemyMadeMove = true;
-
 			Debug.Log("Enemy attacking.");
+
+			enemyMadeMove = true;
 		}
 	}
 
@@ -123,18 +125,18 @@ public class BattleController : MonoBehaviour
 			if (enemyDamage > 1)
 				enemyDamage -= 1;
 
-			playerMadeMove = true;
-
 			Debug.Log("Player defending.");
+
+			playerMadeMove = true;
 		}
 		else
 		{
 			if (playerDamage > 1)
 				playerDamage -= 1;
 
-			enemyMadeMove = true;
-
 			Debug.Log("Enemy defending.");
+
+			enemyMadeMove = true;
 		}
 	}
 
@@ -146,11 +148,11 @@ public class BattleController : MonoBehaviour
 			{
 				playerHealth += GameController.maxSkillPointsPerSkill - playerHealth;
 				playerHealthPotions--;
+
+				Debug.Log("Player healing.");
+
+				playerMadeMove = true;
 			}
-
-			playerMadeMove = true;
-
-			Debug.Log("Player healing.");
 		}
 		else
 		{
@@ -158,11 +160,11 @@ public class BattleController : MonoBehaviour
 			{
 				enemyHealth += GameController.maxSkillPointsPerSkill - enemyHealth;
 				enemyHealthPotions--;
+
+				Debug.Log("Enemy healing.");
+
+				enemyMadeMove = true;
 			}
-
-			enemyMadeMove = true;
-
-			Debug.Log("Enemy healing.");
 		}
 	}
 

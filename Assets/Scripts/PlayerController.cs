@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 	void SpawnPosition ()
 	{
 		if (GameController.playerTransform == null)
-			myTransform = transform;
+			GameController.playerTransform = myTransform;
 		else
 			myTransform = GameController.playerTransform;
 	}
